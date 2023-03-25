@@ -13,7 +13,7 @@ class BaseModel(Model):
 
 
 class Marca(BaseModel):
-    nombre = CharField()
+    nombre = CharField(unique=True)
 
 
 class Categoria(BaseModel):
