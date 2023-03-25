@@ -18,14 +18,14 @@ source = body.get_attribute('innerHTML')
 soup = BeautifulSoup(source, "lxml")
 productos = soup.find_all("div", class_="lyracons-product-summary-status-0-x-container")
 
-
 for item in productos:
-    nombre = item.find("span", class_="vtex-product-summary-2-x-productBrand vtex-product-summary-2-x-brandName t-body").text
+    nombre = item.find("span",
+                       class_="vtex-product-summary-2-x-productBrand vtex-product-summary-2-x-brandName t-body").text
     precio_entero = item.find("span", class_="lyracons-carrefourarg-product-price-1-x-currencyInteger").text
     precio_decimal = item.find("span", class_="lyracons-carrefourarg-product-price-1-x-currencyFraction").text
     marca, created = Marca.get_or_create(nombre="N/A")
     categoria, created = Categoria.get_or_create(nombre="Aceites y vinagres")
-    #print(f"{nombre} | $ {precio_entero},{precio_decimal}")
+    # print(f"{nombre} | $ {precio_entero},{precio_decimal}")
     producto = Producto.create(
         nombre=nombre,
         supermercado="Carrefour",
