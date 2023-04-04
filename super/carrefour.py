@@ -59,7 +59,7 @@ def main():
                 if not sigue:
                     break
 
-
+#tengo que sacarlas de la db y tener un csv de backup
 secciones = [
     "Pastas-secas",
     "Arroz-y-legumbres",

@@ -29,5 +29,12 @@ class Producto(BaseModel):
     canasta_basica = BooleanField()
 
 
+class Seccion(BaseModel):
+    nombre = CharField()
+    url = CharField()
+    supermercado = CharField()
+    categoria = ForeignKeyField(Categoria, backref='secciones')
+
+
 # simple utility function to create tables
-db.create_tables([Marca, Categoria, Producto])
+#db.create_tables([Seccion])
