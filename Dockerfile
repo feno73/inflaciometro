@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.11-slim-bullseye
+FROM python:3.11.3-alpine
 
 # Copy the content of the root folder to the working directory in the container
 
