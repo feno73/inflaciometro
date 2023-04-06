@@ -9,6 +9,11 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# Update Linux
+RUN apk update && \
+    apk add --virtual build-deps gcc python-dev musl-dev && \
+    apk add postgresql-dev && \
+
 # Copy cron file to the container
 COPY cron /etc/cron.d/cron
 
@@ -21,10 +26,7 @@ RUN crontab /etc/cron.d/cron
 # Link cron log file to stdout
 RUN ln -s /dev/stdout /var/log/cron
 
-RUN apk update && \
-    apk add --virtual build-deps gcc python-dev musl-dev && \
-    apk add postgresql-dev && \
-
+# Instalar dependencias
 COPY . /app
 RUN pip install -r requirements.txt
 
