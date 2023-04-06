@@ -1,4 +1,4 @@
-from models import Producto, Marca, Categoria
+from models import Producto, Marca, Categoria, Seccion
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -42,14 +42,15 @@ def crear_producto(item, seccion):
     return producto
 
 
-def main():
+def carrefourscrapp():
     options = webdriver.ChromeOptions()
     # options.add_argument('headless')
     # revisar porque no carga bien los productos en modo headless
 
+    secciones = Seccion.select().where(Seccion.supermercado == "Carrefour")
     with webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options) as driver:
         for seccion in secciones:
-            url = f"https://www.carrefour.com.ar/Almacen/{seccion}?page="
+            url = f"https://www.carrefour.com.ar/Almacen/{seccion.url}?page="
             pagina = 1
             while True:
                 productos, sigue = obtener_productos(driver, f"{url}{str(pagina)}")
@@ -59,18 +60,6 @@ def main():
                 if not sigue:
                     break
 
-#tengo que sacarlas de la db y tener un csv de backup
-secciones = [
-    "Pastas-secas",
-    "Arroz-y-legumbres",
-    "Harinas",
-    "Enlatados-y-Conservas",
-    "Sal-aderezos-y-saborizadores",
-    "Caldos-sopas-y-pure",
-    "Reposteria-y-postres",
-    "Snacks",
-    "Aceites-y-vinagres"
-]
 
 if __name__ == '__main__':
-    main()
+    carrefourscrapp()
