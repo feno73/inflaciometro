@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED 1
 # Update Linux
 RUN apk update
 #    apk add --virtual build-deps gcc python-dev musl-dev && \
-#    apk add postgresql-dev && \
+RUN apk add postgresql-dev
 
 # Copy cron file to the container
 COPY cron /etc/cron.d/cron
