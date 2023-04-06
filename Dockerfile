@@ -21,6 +21,9 @@ RUN crontab /etc/cron.d/cron
 # Link cron log file to stdout
 RUN ln -s /dev/stdout /var/log/cron
 
+RUN apk update && \
+    apk add --virtual build-deps gcc python-dev musl-dev && \
+    apk add postgresql-dev && \
 
 COPY . /app
 RUN pip install -r requirements.txt
