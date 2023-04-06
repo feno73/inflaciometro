@@ -2,7 +2,7 @@
 FROM python:3.11-slim-bullseye
 
 # Copy the content of the root folder to the working directory in the container
-COPY . /app
+
 WORKDIR /app
 
 # set environment variables
@@ -10,9 +10,11 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Install required packages
-RUN apt-get update && apt-get install -y libpq-dev gcc && pip install psycopg2 \
-RUN apt-get install -y cron && cron \
-RUN pip install -r requirements.txt \
+RUN apt-get update && apt-get install -y libpq-dev gcc && pip install psycopg2
+RUN apt-get install -y cron && cron
+
+COPY . /app
+RUN pip install -r requirements.txt
 
 
 # Create cron job to run main script everyday at 7am
