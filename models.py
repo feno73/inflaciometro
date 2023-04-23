@@ -37,4 +37,4 @@ class Seccion(BaseModel):
 
 
 # simple utility function to create tables
-#db.create_tables([Seccion])
+db.create_tables([Marca, Categoria, Producto, Seccion])
