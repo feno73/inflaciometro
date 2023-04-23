@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.11.3-alpine
+FROM python:3.8-slim-buster
 
 # Copy the content of the root folder to the working directory in the container
 
@@ -10,9 +10,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Update Linux
-RUN apk update
-#    apk add --virtual build-deps gcc python-dev musl-dev && \
-RUN apk add postgresql-dev
+RUN apt-get update \
+    && apt-get -y install libpq-dev gcc
 
 # Copy cron file to the container
 COPY cron /etc/cron.d/cron
