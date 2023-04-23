@@ -11,19 +11,22 @@ ENV PYTHONUNBUFFERED 1
 
 # Update Linux
 RUN apt-get update \
-    && apt-get -y install libpq-dev gcc
+    && apt-get -y install libpq-dev gcc cron
 
 # Copy cron file to the container
-COPY cron /etc/cron.d/cron
+# COPY cron /etc/cron.d/cron
 
 # Give the permission
-RUN chmod 0644 /etc/cron.d/cron
+# RUN chmod 0644 /etc/cron.d/cron
 
 # Add the cron job
-RUN crontab /etc/cron.d/cron
+# RUN crontab /etc/cron.d/cron
+RUN crontab -l | { cat; echo "0 7 * * * python /app/main.py"; } | crontab -
+
+
 
 # Link cron log file to stdout
-RUN ln -s /dev/stdout /var/log/cron
+# RUN ln -s /dev/stdout /var/log/cron
 
 # Instalar dependencias
 COPY . /app
