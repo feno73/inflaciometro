@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import os
+from log import log_debug
 from dotenv import load_dotenv
 
 CHROME = os.getenv('CHROME_HOST')
@@ -54,11 +55,14 @@ def carrefourscrapp():
     secciones = Seccion.select().where(Seccion.supermercado == "Carrefour")
     with webdriver.Remote(f"http://{CHROME}:4444/wd/hub", options=options) as driver:
         for seccion in secciones:
+            log_debug(f"Accediendo a la seccion {seccion.nombre}")
             url = f"https://www.carrefour.com.ar/Almacen/{seccion.url}?page="
             pagina = 1
+            log_debug(f"Accediendo a {url}{str(pagina)}")
             while True:
                 productos, sigue = obtener_productos(driver, f"{url}{str(pagina)}")
                 lista_productos = [crear_producto(item, seccion) for item in productos]
+                log_debug(f"{lista_productos.len} productos a guardar")
                 Producto.bulk_create(lista_productos)
                 pagina += 1
                 if not sigue:
