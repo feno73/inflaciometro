@@ -49,7 +49,7 @@ def crear_producto(item, seccion):
 
 def carrefourscrapp():
     options = webdriver.ChromeOptions()
-    options.add_argument('headless')
+    # options.add_argument('headless')
     # revisar porque no carga bien los productos en modo headless
 
     secciones = Seccion.select().where(Seccion.supermercado == "Carrefour")
