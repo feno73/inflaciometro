@@ -14,7 +14,7 @@ services:
       - ./postgres-data:/var/lib/postgresql/data
 
   chrome:
-    image: selenium/standalone-chrome:latest
+    image: seleniarm/standalone-chromium:latest
     ports:
       - '4444:4444'
     privileged: true
