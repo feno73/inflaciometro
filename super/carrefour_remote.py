@@ -62,7 +62,7 @@ def carrefourscrapp():
             while True:
                 productos, sigue = obtener_productos(driver, f"{url}{str(pagina)}")
                 lista_productos = [crear_producto(item, seccion) for item in productos]
-                log_debug(f"{lista_productos.len} productos a guardar")
+                log_debug(f"{len(lista_productos)} productos a guardar")
                 Producto.bulk_create(lista_productos)
                 pagina += 1
                 if not sigue:
