@@ -17,7 +17,7 @@ RUN apt-get update \
 COPY cron /etc/cron.d/cron
 
 # Give the permission
-RUN chmod 0644 /etc/cron.d/cron
+RUN chmod 644 /etc/cron.d/cron
 
 # Add the cron job
 RUN crontab /etc/cron.d/cron

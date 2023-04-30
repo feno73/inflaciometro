@@ -1,14 +1,8 @@
 from models import Producto, Marca, Categoria, Seccion
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 import time
-import os
-from log import log_debug
-from dotenv import load_dotenv
-
-CHROME = os.getenv('CHROME_HOST')
+from utils.log import log_debug
+from utils.selenium_conf import get_driver
 
 
 def obtener_productos(driver, url):
@@ -48,12 +42,9 @@ def crear_producto(item, seccion):
 
 
 def carrefourscrapp():
-    options = webdriver.ChromeOptions()
-    # options.add_argument('headless')
-    # revisar porque no carga bien los productos en modo headless
-
     secciones = Seccion.select().where(Seccion.supermercado == "Carrefour")
-    with webdriver.Remote(f"http://{CHROME}:4444/wd/hub", options=options) as driver:
+
+    with get_driver() as driver:
         for seccion in secciones:
             log_debug(f"Accediendo a la seccion {seccion.nombre}")
             url = f"https://www.carrefour.com.ar/Almacen/{seccion.url}?page="
