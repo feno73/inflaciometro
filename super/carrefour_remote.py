@@ -1,9 +1,8 @@
 from models import Producto, Marca, Categoria, Seccion
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 import time
+from utils.log import log_debug
+from utils.selenium_conf import get_driver
 
 
 def obtener_productos(driver, url):
@@ -30,7 +29,7 @@ def crear_producto(item, seccion):
     precio_decimal = precio_venta.find_element(By.CLASS_NAME,
                                                "lyracons-carrefourarg-product-price-1-x-currencyFraction").text
     marca, created = Marca.get_or_create(nombre="N/A")
-    categoria, created = Categoria.get_or_create(nombre=seccion.replace("-", " "))
+    categoria, created = Categoria.get_or_create(nombre=seccion.url.replace("-", " "))
     producto = Producto(
         nombre=nombre,
         supermercado="Carrefour",
@@ -43,18 +42,18 @@ def crear_producto(item, seccion):
 
 
 def carrefourscrapp():
-    options = webdriver.ChromeOptions()
-    # options.add_argument('headless')
-    # revisar porque no carga bien los productos en modo headless
-
     secciones = Seccion.select().where(Seccion.supermercado == "Carrefour")
-    with webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options) as driver:
+
+    with get_driver() as driver:
         for seccion in secciones:
+            log_debug(f"Accediendo a la seccion {seccion.nombre}")
             url = f"https://www.carrefour.com.ar/Almacen/{seccion.url}?page="
             pagina = 1
+            log_debug(f"Accediendo a {url}{str(pagina)}")
             while True:
                 productos, sigue = obtener_productos(driver, f"{url}{str(pagina)}")
                 lista_productos = [crear_producto(item, seccion) for item in productos]
+                log_debug(f"{len(lista_productos)} productos a guardar")
                 Producto.bulk_create(lista_productos)
                 pagina += 1
                 if not sigue:

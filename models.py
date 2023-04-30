@@ -1,4 +1,4 @@
-from db import db
+from utils.db import db
 from peewee import *
 import datetime
 

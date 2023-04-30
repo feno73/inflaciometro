@@ -2,3 +2,5 @@ venv
 postgres-data
 /.idea/dbnavigator.xml
 .env
+*.log
+/super/mi_log.log
