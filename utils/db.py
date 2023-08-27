@@ -1,6 +1,7 @@
 import os
-from peewee import PostgresqlDatabase
+
 from dotenv import load_dotenv
+from peewee import PostgresqlDatabase
 
 load_dotenv()
 

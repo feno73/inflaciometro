@@ -1,6 +1,8 @@
-from utils.db import db
-from peewee import *
 import datetime
+
+from peewee import *
+
+from utils.db import db
 
 
 class BaseModel(Model):
@@ -35,6 +37,8 @@ class Seccion(BaseModel):
     supermercado = CharField()
     categoria = ForeignKeyField(Categoria, backref='secciones')
 
+class Keyword(BaseModel):
+    nombre = CharField()
 
 # simple utility function to create tables
-db.create_tables([Marca, Categoria, Producto, Seccion])
+db.create_tables([Keyword])

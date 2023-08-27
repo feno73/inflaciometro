@@ -1,6 +1,8 @@
-from models import Producto, Marca, Categoria, Seccion
-from selenium.webdriver.common.by import By
 import time
+
+from selenium.webdriver.common.by import By
+
+from models import Producto, Marca, Categoria, Seccion
 from utils.log import log_debug
 from utils.selenium_conf import get_driver
 

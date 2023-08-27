@@ -1,6 +1,7 @@
-from selenium import webdriver
 import os
+
 from dotenv import load_dotenv
+from selenium import webdriver
 
 load_dotenv()
 CHROME = os.getenv('CHROME_HOST')
